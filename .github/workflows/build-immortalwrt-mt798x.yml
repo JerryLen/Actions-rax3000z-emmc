@@ -33,8 +33,8 @@ on:
         type: boolean
 
 env:
-  #REPO_URL: https://github.com/hanwckf/immortalwrt-mt798x
-  REPO_URL: https://github.com/padavanonly/immortalwrt-mt798x
+  REPO_URL: https://github.com/hanwckf/immortalwrt-mt798x
+  #REPO_URL: https://github.com/padavanonly/immortalwrt-mt798x
   FREE_DISK_SH: scripts/free_disk_space.sh
   ENV_SH: scripts/environment.sh
   DIY_SH: scripts/diy.sh
@@ -125,12 +125,6 @@ jobs:
         make download -j8 V=10
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-
-    - name: Build po2lmo host tool
-      run: |
-        cd openwrt/tools/po2lmo
-        make
-        sudo make install
         
     - name: 编译固件中
       id: compile
