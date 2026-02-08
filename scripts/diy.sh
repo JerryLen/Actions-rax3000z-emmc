@@ -9,4 +9,6 @@ echo "src-git kenzo https://github.com/kenzok8/openwrt-packages" >> ./feeds.conf
 git clone https://github.com/zzsj0928/luci-app-pushbot.git package/luci-app-pushbot
 
 # 修复 rust 预编译文件失效
+cd openwrt
 sed -i 's/--set=llvm\.download-ci-llvm=true/--set=llvm.download-ci-llvm=false/' feeds/packages/lang/rust/Makefile
+cd -
