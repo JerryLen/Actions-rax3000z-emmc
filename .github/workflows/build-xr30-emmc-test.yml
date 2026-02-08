@@ -92,9 +92,9 @@ jobs:
         git config --global user.name "github-actions[bot]"
         #git fetch https://github.com/padavanonly/immortalwrt-mt798x
         #git merge FETCH_HEAD
-        
-        ./scripts/feeds update -a && ./scripts/feeds install -a        
+        # 自定义脚本
         chmod +x $GITHUB_WORKSPACE/$DIY_SH && $GITHUB_WORKSPACE/$DIY_SH
+        ./scripts/feeds update -a && ./scripts/feeds install -af        
 
     - name: 导入补丁和配置
       run: |
