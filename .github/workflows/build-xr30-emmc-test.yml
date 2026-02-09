@@ -101,7 +101,7 @@ jobs:
     - name: 导入补丁和配置
       run: |
         [ -e files ] && mv files openwrt/files
-        cat configs/xr30-emmc.config >> openwrt/.config
+        cat configs/rax3000z-emmc.config >> openwrt/.config
 
     - name: 设置是否使用 xr30 led dts
       run: |
