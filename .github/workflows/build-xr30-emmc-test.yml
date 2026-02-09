@@ -35,7 +35,7 @@ on:
 env:
   #REPO_URL: https://github.com/hanwckf/immortalwrt-mt798x
   REPO_URL: https://github.com/padavanonly/immortalwrt-mt798x-6.6
-  REPO_BRANCH: 2410
+  REPO_BRANCH: openwrt-24.10-6.6
   FREE_DISK_SH: scripts/free_disk_space.sh
   ENV_SH: scripts/environment.sh
   DIY_SH: scripts/diy.sh
