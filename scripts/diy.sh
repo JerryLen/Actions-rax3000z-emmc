@@ -7,8 +7,3 @@ sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_genera
 echo "src-git kenzo https://github.com/kenzok8/openwrt-packages" >> ./feeds.conf.default
 # 添加自定义包
 git clone https://github.com/zzsj0928/luci-app-pushbot.git package/luci-app-pushbot
-
-# 修复 rust 预编译文件失效
-cd openwrt
-sed -i 's/--set=llvm\.download-ci-llvm=true/--set=llvm.download-ci-llvm=false/' feeds/packages/lang/rust/Makefile
-cd -
