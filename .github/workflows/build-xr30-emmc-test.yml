@@ -94,7 +94,10 @@ jobs:
     - name: 导入补丁和配置
       run: |
         [ -e files ] && mv files openwrt/files
-        cat configs/rax3000z-emmc.config >> openwrt/.config
+        cat configs/xr30-emmc.config >> openwrt/.config
+        echo "====================配置文件===================="
+        cat  openwrt/.config
+        echo "================================================"
 
     - name: 设置是否使用 nx30pro eeprom
       if: env.USE_NX30PRO_EEPROM == 'true'
