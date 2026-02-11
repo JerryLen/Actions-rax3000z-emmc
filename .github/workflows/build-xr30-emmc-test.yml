@@ -16,11 +16,6 @@ permissions: write-all
 on:
   workflow_dispatch:
     inputs:
-      USE_XR30_LED_DTS:
-        description: 'Use xr30 led dts'
-        required: true
-        default: true
-        type: boolean
       USE_NX30PRO_EEPROM:
         description: 'Use nx30pro eeprom'
         required: true
@@ -56,7 +51,6 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        echo "USE_XR30_LED_DTS=${{ github.event.inputs.USE_XR30_LED_DTS }}" >> $GITHUB_ENV
         echo "USE_NX30PRO_EEPROM=${{ github.event.inputs.USE_NX30PRO_EEPROM }}" >> $GITHUB_ENV
         echo "USE_52MHZ=${{ github.event.inputs.USE_52MHZ }}" >> $GITHUB_ENV
         chmod +x $FREE_DISK_SH && $FREE_DISK_SH
@@ -78,12 +72,12 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt 
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
-    - name: 开启缓存
-      uses: klever1988/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        mixkey: 'openwrt21-cortexa53'
-        prefix: ${{ github.workspace }}/openwrt
+    # - name: 开启缓存
+    #   uses: klever1988/cachewrtbuild@main
+    #   with:
+    #     ccache: 'true'
+    #     mixkey: 'openwrt21-cortexa53'
+    #     prefix: ${{ github.workspace }}/openwrt
 
     - name: 更新 & 安装 feeds & 执行脚本
       run: |
@@ -92,8 +86,7 @@ jobs:
         # sed -i 's/--set=llvm\.download-ci-llvm=true/--set=llvm.download-ci-llvm=false/' feeds/packages/lang/rust/Makefile
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
-        #git fetch https://github.com/padavanonly/immortalwrt-mt798x
-        #git merge FETCH_HEAD
+
         # 自定义脚本
         chmod +x $GITHUB_WORKSPACE/$DIY_SH && $GITHUB_WORKSPACE/$DIY_SH
         ./scripts/feeds update -a && ./scripts/feeds install -af        
@@ -102,10 +95,6 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         cat configs/rax3000z-emmc.config >> openwrt/.config
-
-    - name: 设置是否使用 xr30 led dts
-      run: |
-        cp mt7981-cmcc-xr30-emmc.dtsi openwrt/target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7981-cmcc-rax3000m.dtsi
 
     - name: 设置是否使用 nx30pro eeprom
       if: env.USE_NX30PRO_EEPROM == 'true'
